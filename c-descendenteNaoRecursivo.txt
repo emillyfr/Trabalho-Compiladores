@@ -1,0 +1,96 @@
+##
+PROG -> #include <stdio.h> int main(){<CMDS>}
+DC -> <VAR><MAIS_CMDS>
+VAR -> <TIPO><VARS>
+VARS -> id<MAIS_VAR>
+MAIS_VAR -> ,<VARS>
+MAIS_VAR -> &
+TIPO -> double
+CMDS -> <CMD><MAIS_CMDS>
+CMDS -> <CMD_COND><CMDS>
+CMDS -> <DC>
+CMDS -> &
+MAIS_CMDS -> ;<CMDS>
+CMD_COND -> if (<CONDICAO>){<CMDS>}<PFALSA>
+CMD_COND -> while (<CONDICAO>){<CMDS>}
+CMD -> printf (id)
+CMD -> id <RESTO_IDENT>
+PFALSA -> else {<CMDS>}
+PFALSA -> &
+RESTO_IDENT -> = <EXP_IDENT>
+EXP_IDENT -> <EXPRESSAO>
+EXP_IDENT -> lerDouble()
+CONDICAO -> <EXPRESSAO><RELACAO><EXPRESSAO>
+RELACAO -> ==
+RELACAO -> !=
+RELACAO -> >=
+RELACAO -> <=
+RELACAO -> <
+RELACAO -> >
+EXPRESSAO -> <TERMO><OUTROS_TERMOS>
+TERMO -> <OP_UN><FATOR><MAIS_FATORES>
+OP_UN -> -
+OP_UN -> &
+FATOR -> id
+FATOR -> numero_real
+FATOR -> (<EXPRESSAO>)
+OUTROS_TERMOS -> <OP_AD><TERMO><OUTROS_TERMOS>
+OUTROS_TERMOS -> &
+OP_AD -> +
+OP_AD -> -
+MAIS_FATORES -> <OP_MUL><FATOR><MAIS_FATORES>
+MAIS_FATORES -> &
+OP_MUL -> *
+OP_MUL -> /
+
+##     First    ###
+First(PROG) = {#}
+First(DC) = {double}
+First(VAR) = {double}
+First(VARS) = {id}
+First(MAIS_VAR)  = {, , &}
+First(TIPO) = {double}
+First(CMDS) = {printf, id, if , while, double, &}
+First(MAIS_CMDS) = {;}
+First(CMD_COND) = {if, while}
+First(CMD) = {printf, id}
+First(PFALSA) = {else, &}
+First(RESTO_IDENT) = {=}
+First(EXP_IDENT) = {-, &, lerDouble()}
+First(CONDICAO) = {-, &}
+First(RELACAO) = {==, !=, >= , <= , < , >}
+First(EXPRESSAO) = {-, &}
+First(TERMO) = {-, &}
+First(OP_UN) = {-,&}
+First(FATOR) = {id, numeroreal, (}
+First(OUTROS_TERMOS) = {+,-,&}
+First(OP_AD) = {+,-}
+First(MAIS_FATORES) = {*,/,&}
+First(OP_MUL) = {*,/}
+
+##     FOLLOW    ###
+Follow(PROG) = {$}
+Follow(DC) = {;}
+Follow(VAR) = {;}
+Follow(VARS) = {;}
+Follow(MAIS_VAR) = {;}
+Follow(TIPO) = {id}
+Follow(CMDS) = { } ,;}
+Follow(MAIS_CMDS) = { },;}
+Follow(CMD_COND) = {printf, id, if , while, double, &} U follow(CMDS)  = {printf, id, if , while, double, ; , } }
+Follow(CMD) = {;}
+Follow(PFALSA) = {printf, id, if , while, double, ; , } }
+Follow(RESTO_IDENT) = {;}
+Follow(EXP_IDENT) = {;}
+Follow(CONDICAO) = {)}
+Follow(RELACAO) = {-} U Follow(<CONDICAO>) = {-,)}
+Follow(EXPRESSAO) = {), ==, !=, >= , <= , < , >, ;}
+Follow(TERMO) = {+, - } u Follow(<EXPRESSAO>) ={+, -,), ==, !=, >= , <= , < , >, ; }
+Follow(OP_UN) = {id, numeroreal, (}
+Follow(FATOR) = {*, /, &} U Follow(TERMO) U Follow(MAIS_FATORES) = {*, /,+, -,), ==, !=, >= , <= , < , >, ; , & }
+Follow(OUTROS_TERMOS) = Follow(OUTROS_TERMOS) u Follow(EXPRESSAO)  = {), ==, !=, >= , <= , < , >, ;}
+Follow(OP_AD) = {-,&} U First(OUTROS_TERMOS) U Follow(OUTROS_TERMOS) = {-,+,), ==, !=, >= , <= , < , >, ; }
+Follow(MAIS_FATORES) = {+, -,), ==, !=, >= , <= , < , >, ;}
+Follow(OP_MUL) = {id, numeroreal, (}
+
+
