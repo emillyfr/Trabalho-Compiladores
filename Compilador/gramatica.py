@@ -1,0 +1,33 @@
+
+G = {
+    'PROG': [['PROLOGO', '@INPP', 'CMDS', '}', '@PARA']],
+    'DC': [['VAR', 'MAIS_CMDS']],
+    'VAR': [['TIPO', 'VARS']],
+    'VARS': [['id', '@DECLARA', 'MAIS_VAR']],
+    'MAIS_VAR': [[',', 'VARS'], []],
+    'TIPO': [['double']],
+    'CMDS': [['CMD', 'MAIS_CMDS'], ['CMD_COND', 'CMDS'], ['DC'], []],
+    'MAIS_CMDS': [[';', 'CMDS']],
+    'CMD_COND': [
+        ['if', '(', 'CONDICAO', ')', '@IF_DSVF', '{', 'CMDS', '}', 'PFALSA'],
+        ['while', '@WHILE_INI', '(', 'CONDICAO', ')', '@WHILE_DSVF',
+         '{', 'CMDS', '}', '@WHILE_FIM'],
+    ],
+    'CMD': [['printf', '(', 'id', '@IMPRIME', ')'],
+            ['id', '@ATRIB_ID', 'RESTO_IDENT']],
+    'PFALSA': [['else', '@ELSE_INI', '{', 'CMDS', '}', '@ELSE_FIM'],
+               ['@IF_FIM']],
+    'RESTO_IDENT': [['=', 'EXP_IDENT', '@ARMZ']],
+    'EXP_IDENT': [['EXPRESSAO'], ['lerDouble()', '@LEIT']],
+    'CONDICAO': [['EXPRESSAO', 'RELACAO', 'EXPRESSAO', '@GERA_REL']],
+    'RELACAO': [[op, '@GUARDA_OP'] for op in ('==', '!=', '>=', '<=', '<', '>')],
+    'EXPRESSAO': [['TERMO', 'OUTROS_TERMOS']],
+    'TERMO': [['@TERMO_INI', 'OP_UN', 'FATOR', '@TERMO_NEG', 'MAIS_FATORES']],
+    'OP_UN': [['-', '@SET_NEG'], []],
+    'FATOR': [['id', '@CRVL'], ['numero_real', '@CRCT'], ['(', 'EXPRESSAO', ')']],
+    'OUTROS_TERMOS': [['OP_AD', 'TERMO', '@GERA_ARIT', 'OUTROS_TERMOS'], []],
+    'OP_AD': [['+', '@GUARDA_OP'], ['-', '@GUARDA_OP']],
+    'MAIS_FATORES': [['OP_MUL', 'FATOR', '@GERA_ARIT', 'MAIS_FATORES'], []],
+    'OP_MUL': [['*', '@GUARDA_OP'], ['/', '@GUARDA_OP']],
+}
+INICIAL = 'PROG'
