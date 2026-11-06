@@ -1,18 +1,13 @@
-
 from .erros import ErroLexico
-
 
 PALAVRAS_RESERVADAS = {'printf', 'double', 'if', 'else', 'while'}
 PROLOGO = ['#include', '<stdio.h>', 'int', 'main', '(', ')', '{']
 
-
 def eh_letra(c):
     return ('a' <= c <= 'z') or ('A' <= c <= 'Z') or c == '_'
 
-
 def eh_digito(c):
     return '0' <= c <= '9'
-
 
 def pular_espacos(texto, i, linha):
     while i < len(texto) and texto[i] in ' \t\r\n':
@@ -21,9 +16,7 @@ def pular_espacos(texto, i, linha):
         i += 1
     return i, linha
 
-
 def ler_prologo(texto, i, linha):
-    """Reconhece '#include <stdio.h> int main(){' como UM terminal (PROLOGO)."""
     for parte in PROLOGO:
         i, linha = pular_espacos(texto, i, linha)
         if not texto.startswith(parte, i):
@@ -32,16 +25,18 @@ def ler_prologo(texto, i, linha):
         i += len(parte)
     return i, linha
 
-
 def tokenizar(texto):
-    """Devolve lista de tokens (tipo, lexema, linha), terminada por '$'."""
-    tokens, i, linha, n = [], 0, 1, len(texto)
+    tokens = []
+    i = 0
+    linha = 1
+    n = len(texto)
+
     while i < n:
         c = texto[i]
         if c in ' \t\r\n':
             i, linha = pular_espacos(texto, i, linha)
             continue
-        if c == '/' and texto[i + 1:i + 2] == '/':          # comentário de linha
+        if c == '/' and texto[i + 1:i + 2] == '/':
             while i < n and texto[i] != '\n':
                 i += 1
             continue
@@ -55,7 +50,7 @@ def tokenizar(texto):
             while j < n and (eh_letra(texto[j]) or eh_digito(texto[j])):
                 j += 1
             lex = texto[i:j]
-            if lex == 'lerDouble':                           # lerDouble()
+            if lex == 'lerDouble':
                 k = j
                 while k < n and texto[k] in ' \t':
                     k += 1
