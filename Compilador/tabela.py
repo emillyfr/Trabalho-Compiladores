@@ -1,11 +1,14 @@
 
 import csv
-
 from .gramatica import G, INICIAL
 
 
 def sem_acoes(prod):
-    return [s for s in prod if not s.startswith('@')]
+    resultado = []
+    for s in prod:
+        if not s.startswith('@'):
+            resultado.append(s)
+    return resultado
 
 
 def first_seq(seq, first):
