@@ -13,6 +13,6 @@ O código objeto é salvo em saida/codigo-objeto.txt.
 # Máquina
 Para executar a máquina:
 ```
-python Compilador/maquina.py saida/codigo-objeto.txt
+python Compilador/maquina.py 
 ```
 
