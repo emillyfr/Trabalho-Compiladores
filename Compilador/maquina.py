@@ -7,8 +7,6 @@ import sys
 
 PASTA = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-
 SEM_ARG = {'INPP', 'PARA', 'SOMA', 'SUBT', 'MULT', 'DIVI', 'INVE',
            'CPMA', 'CPME', 'CPIG', 'CDES', 'CMAI', 'CPMI', 'IMPR', 'LEIT'}
 COM_ARG = {'ALME', 'CRCT', 'CRVL', 'ARMZ', 'DSVF', 'DSVI'}
@@ -60,7 +58,10 @@ def carregar(linhas):
             if len(partes) != 2:
                 raise ErroExecucao(f"Instrução {len(programa)}: '{op}' precisa de 1 argumento")
             try:
-                arg = float(partes[1]) if op == 'CRCT' else int(partes[1])
+                if op == 'CRCT':
+                    arg = float(partes[1])
+                else:
+                    arg = int(partes[1])
             except ValueError:
                 raise ErroExecucao(f"Instrução {len(programa)}: argumento inválido '{partes[1]}'")
             programa.append((op, arg))
@@ -91,7 +92,7 @@ def executar(linhas, passo=False, leitor=ler_numero, escritor=print):
     if not programa or programa[0][0] != 'INPP':
         raise ErroExecucao("O programa deve começar com INPP")
 
-    pilha = []              # a pilha também é a memória das variáveis (endereço = posição)
+    pilha = []
     pc = 0
     executadas = 0
 
@@ -160,12 +161,21 @@ def executar(linhas, passo=False, leitor=ler_numero, escritor=print):
             pilha.append(leitor())
 
         if passo:
-            texto = op if arg is None else f"{op} {formata(arg) if op == 'CRCT' else arg}"
+            if arg is None:
+                texto = op
+            elif op == 'CRCT':
+                texto = f"{op} {formata(arg)}"
+            else:
+                texto = f"{op} {arg}"
             escritor(f"{ip:3}  {texto:<10} pilha = {[formata(v) for v in pilha]}")
 
 
 def principal():
-    args = [a for a in sys.argv[1:] if not a.startswith('--')]
+    args = []
+    for a in sys.argv[1:]:
+        if not a.startswith('--'):
+            args.append(a)
+
     passo = '--passo' in sys.argv
     if len(args) == 0:
         listar()
