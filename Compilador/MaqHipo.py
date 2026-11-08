@@ -4,8 +4,8 @@ import os
 import math
 import sys
 
+CAMINHO_ARQUIVO = "saida/codigo-objeto.txt"
 
-PASTA = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SEM_ARG = {'INPP', 'PARA', 'SOMA', 'SUBT', 'MULT', 'DIVI', 'INVE',
            'CPMA', 'CPME', 'CPIG', 'CDES', 'CMAI', 'CPMI', 'IMPR', 'LEIT'}
@@ -25,23 +25,6 @@ RELACIONAIS = {
     'CMAI': lambda a, b: a >= b,
     'CPMI': lambda a, b: a <= b,
 }
-
-def localizar(nome):
-    if not nome.endswith('.txt'):
-        nome = nome + '.txt'
-    caminho = os.path.join(PASTA, nome)
-    if not os.path.isfile(caminho):
-        raise FileNotFoundError(f"'{nome}' não encontrado em {PASTA}")
-    return caminho
-
-
-def listar():
-    print(f"Arquivos .txt em {PASTA}:")
-    if os.path.isdir(PASTA):
-        for arquivo in sorted(os.listdir(PASTA)):
-            if arquivo.endswith('.txt'):
-                print("  ", arquivo)
-
 
 def carregar(linhas):
     programa = []
@@ -171,21 +154,9 @@ def executar(linhas, passo=False, leitor=ler_numero, escritor=print):
 
 
 def principal():
-    args = []
-    for a in sys.argv[1:]:
-        if not a.startswith('--'):
-            args.append(a)
-
     passo = '--passo' in sys.argv
-    if len(args) == 0:
-        listar()
-        return 0
-    if len(args) != 1:
-        print(__doc__)
-        return 2
     try:
-        caminho = localizar(args[0])
-        with open(caminho, encoding='utf-8') as f:
+        with open(CAMINHO_ARQUIVO, encoding='utf-8') as f:
             linhas = f.read().splitlines()
         executar(linhas, passo=passo)
     except OSError as e:
