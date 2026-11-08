@@ -48,7 +48,8 @@ def main():
         rotulo = {
             'ErroLexico': 'Erro léxico',
             'ErroSintatico': 'Erro sintático',
-            'ErroSemantico': 'Erro semântico'
+            'ErroSemantico': 'Erro semântico',
+            'ErroExecucao':'Erro execução'
         }[type(e).__name__]
         print(f"{rotulo}: {e}")
         return 1

@@ -1,6 +1,18 @@
 #include <stdio.h>
-
 int main() {
-    printf("%d %d %d\n", 2 + 3 * 4, (2 + 3) * 4, 17 % 5);
-    return 0;
+    double cont;
+    double a,b,c;
+    cont = 1;
+    while(cont > 0) {
+        a = lerDouble();
+        b = lerDouble();
+        if (a > b) {
+            c = a - b;
+        } else {
+            c = b - a;
+        }
+        printf(c);
+        cont = cont - 1;
+    }
+    printf(c);
 }

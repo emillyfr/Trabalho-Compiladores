@@ -6,3 +6,6 @@ class ErroSintatico(Exception):
 
 class ErroSemantico(Exception):
     pass
+
+class ErroExecucao(Exception):
+    pass
