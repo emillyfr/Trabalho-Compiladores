@@ -7,8 +7,9 @@ Na raiz do projeto, execute o seguinte comando:
 ```
 python main.py exemplos/valido.txt
 ```
-Verifique se o código passou em todos os testes.
-Caso tenha passdo o código objeto é salvo em "saida/codigo-objeto.txt".
+- Verifique se o código passou em todos os testes.
+- Caso tenha passdo o código objeto é salvo em "saida/codigo-objeto.txt".
+  
 Após verificar execute o comando:
 ```
 python Compilador/MaqHipo.py 
