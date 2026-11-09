@@ -63,7 +63,11 @@ def tokenizar(texto):
                         i = k + 1
                         continue
                 raise ErroLexico(f"Linha {linha}: 'lerDouble' deve ser usado como lerDouble()")
-            tokens.append((lex if lex in PALAVRAS_RESERVADAS else 'id', lex, linha))
+            if lex in PALAVRAS_RESERVADAS:
+                tipo = lex
+            else:
+                tipo = 'id'
+            tokens.append((tipo, lex, linha))
             i = j
             continue
         if eh_digito(c):

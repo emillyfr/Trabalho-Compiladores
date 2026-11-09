@@ -32,8 +32,8 @@ def analisar(tokens):
                         esperados.append(t)
                 esperados.sort()
                 raise ErroSintatico(
-                    f"Linha {atual[2]}: encontrado {token(atual)} em <{X}>; "
-                    f"esperado um de: {' '.join(esperados)}")
+                    f"Linha {atual[2]}: encontrado {token(atual)}  "
+                    f"esperado um: {' '.join(esperados)}")
             for s in reversed(prod):
                 pilha.append(s)
         else:                                               # terminal

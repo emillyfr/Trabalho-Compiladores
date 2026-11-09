@@ -72,18 +72,3 @@ def construir_tabela():
                 M[(A, a)] = p
     return M
 
-
-def exportar_tabela(caminho):
-    M = construir_tabela()
-    terminais = sorted({t for (_, t) in M}) + ['$']
-    terminais = list(dict.fromkeys(terminais))
-    with open(caminho, 'w', newline='', encoding='utf-8') as f:
-        w = csv.writer(f)
-        w.writerow(['NaoTerminais'] + terminais)
-        for A in G:
-            linha = [A]
-            for t in terminais:
-                p = M.get((A, t))
-                linha.append('' if p is None else
-                             f"{A} -> " + (' '.join(sem_acoes(p)) or '&'))
-            w.writerow(linha)
