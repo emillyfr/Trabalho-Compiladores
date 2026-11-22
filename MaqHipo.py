@@ -1,4 +1,4 @@
-from erros import ErroExecucao
+from Compilador.erros import  ErroExecucao
 
 import math
 import sys

@@ -12,7 +12,7 @@ python main.py exemplos/valido.txt
   
 Após verificar execute o comando:
 ```
-python Compilador/MaqHipo.py 
+python MaqHipo.py 
 ```
 E verifique a saída e analise se o código executou corretamente.
 

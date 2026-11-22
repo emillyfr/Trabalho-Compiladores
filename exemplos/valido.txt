@@ -1,5 +1,8 @@
 #include <stdio.h>
 int main() {
-   double x, y;
+   double x,y,z;
+   x = lerDouble();
+   y = lerDouble();
+   z = x/y;
 
 }

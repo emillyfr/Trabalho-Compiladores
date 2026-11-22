@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import os
 import sys
 from Compilador import compilar_texto, ErroLexico, ErroSintatico, ErroSemantico
@@ -10,7 +9,11 @@ def main():
     args = sys.argv[1:]
     os.makedirs(PASTA_SAIDA, exist_ok=True)
     os.makedirs(PASTA_TABELAS, exist_ok=True)
-    entrada = args[0]
+    if len(args) > 0:
+        entrada = args[0]
+    else:
+        print(f"Sem argumento de arquivo exemplo.")
+        return 1
     if len(args) > 1:
         saida = args[1]
     else:
@@ -22,15 +25,16 @@ def main():
         texto = f.read()
     try:
         codigo = compilar_texto(texto)
-    except (ErroLexico, ErroSintatico, ErroSemantico) as e:
-        rotulo = {
-            'ErroLexico': 'Erro léxico',
-            'ErroSintatico': 'Erro sintático',
-            'ErroSemantico': 'Erro semântico',
-            'ErroExecucao':'Erro execução'
-        }[type(e).__name__]
-        print(f"{rotulo}: {e}")
+    except ErroLexico as e:
+        print(f"Erro léxico: {e}")
         return 1
+    except ErroSintatico as e:
+        print(f"Erro sintático: {e}")
+        return 1
+    except ErroSemantico as e:
+        print(f"Erro semântico: {e}")
+        return 1
+
 
     with open(saida, 'w', encoding='utf-8') as f:
         f.write('\n'.join(codigo) + '\n')
