@@ -16,3 +16,5 @@ python Compilador/MaqHipo.py
 ```
 E verifique a saída e analise se o código executou corretamente.
 
+# Uso de IA
+O desenvolvimento desse projeto teve ajuda do ChatGPT para explicações, revisão do código e para dúvidas sobre a documentação da linguagem.
