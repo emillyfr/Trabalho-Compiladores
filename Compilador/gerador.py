@@ -56,7 +56,7 @@ class Gerador:
         self.emite('IMPR')
 
     def acao_ATRIB_ID(self, tok):
-        self.endereco(tok)                       # só verifica a declaração
+        self.endereco(tok)                       
         self.pilha_ids.append(tok)
 
     def acao_ARMZ(self, tok):
@@ -95,7 +95,7 @@ class Gerador:
         self.pilha_saltos.append(len(self.codigo))
         self.emite('DSVF ?')
 
-    def acao_IF_FIM(self, tok):                  # if sem else
+    def acao_IF_FIM(self, tok):                  
         i = self.pilha_saltos.pop()
         self.codigo[i] = f'DSVF {len(self.codigo)}'
 
