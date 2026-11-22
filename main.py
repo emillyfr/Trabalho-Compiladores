@@ -35,7 +35,7 @@ def main():
     with open(saida, 'w', encoding='utf-8') as f:
         f.write('\n'.join(codigo) + '\n')
     print("Compilação concluída com sucesso!")
-    print(f"Código objeto ({len(codigo)} instruções) salvo em '{saida}':")
+    print(f"Código objeto ({len(codigo)} instruções) salvo em '{saida}'.")
 
     return 0
 
