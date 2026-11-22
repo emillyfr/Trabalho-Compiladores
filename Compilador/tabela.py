@@ -1,5 +1,3 @@
-
-import csv
 from .gramatica import G, INICIAL
 
 
